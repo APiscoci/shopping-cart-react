@@ -2,7 +2,7 @@
 
 Simple React Shopping Cart that can add or remove products to the shopping basket and provide a total cost of the shopping basket.
 
-# Requirements
+## Requirements
 
 * Given I have selected to add an item to the basket Then the item should be added to the basket.
 * Given items have been added to the basket Then the total cost of the basket should be calculated.
