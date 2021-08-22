@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { object } from "prop-types";
+import { object, func } from "prop-types";
 import styled from "styled-components";
 import { DEFAULT_QUANTITY } from "../constants/constants";
 import ProductQuantity from "./product-quantity";
@@ -38,7 +38,7 @@ const AddToBasketButton = styled.button`
   }
 `;
 
-const Product = ({ product }) => {
+const Product = ({ product, addProductToBasket }) => {
   const [quantity, setQuantity] = useState(DEFAULT_QUANTITY);
 
   const [selectedProduct, setSelectedProduct] = useState({
@@ -52,6 +52,7 @@ const Product = ({ product }) => {
   };
 
   const handleAddProductToBasket = () => {
+    addProductToBasket(selectedProduct);
     setQuantity(DEFAULT_QUANTITY);
   };
 
@@ -81,6 +82,7 @@ const Product = ({ product }) => {
 
 Product.propTypes = {
   product: object.isRequired,
+  addProductToBasket: func.isRequired,
 };
 
 export default Product;
