@@ -58,9 +58,10 @@ const Product = ({ product }) => {
   return (
     product && (
       <Container>
-        <ProductSKU data-testid={`product-${product.stockKeepingUnit}`}>
+        <ProductSKU data-testid={`product-${product?.stockKeepingUnit}`}>
           {product?.stockKeepingUnit}
         </ProductSKU>
+        <ProductSKU>£{parseFloat(product?.unitPrice).toFixed(2)}</ProductSKU>
         <ProductQuantity
           quantity={quantity}
           onChange={(value) => {
