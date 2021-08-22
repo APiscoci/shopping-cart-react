@@ -1,6 +1,7 @@
 import {
   calculateNumberProducts,
   calculateTotalPrice,
+  checkPromotionApplied,
   getCostForProduct,
 } from "../utilities/helpers";
 import { mockBasketProducts } from "./mock-data";
@@ -104,6 +105,17 @@ describe("/helpers", () => {
     it("should return the correct price for a list of products", () => {
       const totalPrice = calculateTotalPrice(mockBasketProducts);
       expect(totalPrice).toBe(540);
+    });
+  });
+
+  describe("checkPromotionApplied()", () => {
+    it("should return true if the product has a promotion applied", () => {
+      const numberOfProducts = checkPromotionApplied(mockBasketProducts[1]);
+      expect(numberOfProducts).toBe(true);
+    });
+    it("should return undefined if the product has no promotion applied", () => {
+      const numberOfProducts = checkPromotionApplied(mockBasketProducts[0]);
+      expect(numberOfProducts).toBe(undefined);
     });
   });
 });

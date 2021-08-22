@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { object, func } from "prop-types";
 import ProductQuantity from "../products/product-quantity";
-import { getCostForProduct } from "../utilities/helpers";
+import { checkPromotionApplied, getCostForProduct } from "../utilities/helpers";
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +43,14 @@ const RemoveButton = styled.button`
   cursor: pointer;
 `;
 
+const PromotionAvailable = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
+  left: 2rem;
+  top: 1rem;
+`;
+
 const ShoppingBasketProduct = ({ product, changeQuantity, removeProduct }) => {
   const handleQuantityChange = (value) => {
     changeQuantity({ ...product, quantity: value });
@@ -50,6 +58,9 @@ const ShoppingBasketProduct = ({ product, changeQuantity, removeProduct }) => {
 
   return (
     <Container>
+      {checkPromotionApplied(product) && (
+        <PromotionAvailable>Promotion Applied</PromotionAvailable>
+      )}
       <ProductsContainer
         data-testid={`basket-product-${product.stockKeepingUnit}`}
       >

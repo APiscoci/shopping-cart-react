@@ -83,3 +83,16 @@ export const calculateTotalPrice = (basketProducts) => {
 
   return totalPrice;
 };
+
+/**
+ * Checks if the product has a promotion applied
+ *
+ * @param {array} product
+ * @public
+ */
+
+ export const checkPromotionApplied = (product) => {
+    return (
+      product?.promotion && product?.quantity >= product?.promotion?.requiredQuantity
+    );
+  };
