@@ -48,11 +48,11 @@ const Product = ({ product, addProduct }) => {
 
   const handleOnChangeQuantity = (value) => {
     setQuantity(value);
-    setSelectedProduct({ ...selectedProduct, quantity: value });
   };
 
-  const handleaddProduct = () => {
-    addProduct(selectedProduct);
+  const handleAddProduct = () => {
+    const updatedProduct = { ...selectedProduct, quantity };
+    addProduct(updatedProduct);
     setQuantity(DEFAULT_QUANTITY);
   };
 
@@ -73,7 +73,7 @@ const Product = ({ product, addProduct }) => {
         />
         <AddToBasketButton
           data-testid={`add-to-basket-button-product-${product.stockKeepingUnit}`}
-          onClick={() => handleaddProduct()}
+          onClick={() => handleAddProduct()}
         >
           ADD TO BASKET
         </AddToBasketButton>
