@@ -26,7 +26,23 @@ const ProductPrice = styled.div`
   padding: 1rem 0;
 `;
 
-const ShoppingBasketProduct = ({ product, changeQuantity }) => {
+const RemoveButton = styled.button`
+  width: 1rem;
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-weight: bold;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+`;
+
+const ShoppingBasketProduct = ({ product, changeQuantity, removeProduct }) => {
   const handleQuantityChange = (value) => {
     changeQuantity({ ...product, quantity: value });
   };
@@ -46,6 +62,7 @@ const ShoppingBasketProduct = ({ product, changeQuantity }) => {
           onChange={(value) => handleQuantityChange(value)}
         />
         <ProductPrice>£{product?.quantity * product?.unitPrice}</ProductPrice>
+        <RemoveButton onClick={() => removeProduct(product)}>X</RemoveButton>
       </ProductsContainer>
     </Container>
   );
@@ -54,6 +71,7 @@ const ShoppingBasketProduct = ({ product, changeQuantity }) => {
 ShoppingBasketProduct.propTypes = {
   product: object.isRequired,
   changeQuantity: func.isRequired,
+  removeProduct: func.isRequired,
 };
 
 export default ShoppingBasketProduct;

@@ -38,7 +38,7 @@ const AddToBasketButton = styled.button`
   }
 `;
 
-const Product = ({ product, addProductToBasket }) => {
+const Product = ({ product, addProduct }) => {
   const [quantity, setQuantity] = useState(DEFAULT_QUANTITY);
 
   const [selectedProduct, setSelectedProduct] = useState({
@@ -51,8 +51,8 @@ const Product = ({ product, addProductToBasket }) => {
     setSelectedProduct({ ...selectedProduct, quantity: value });
   };
 
-  const handleAddProductToBasket = () => {
-    addProductToBasket(selectedProduct);
+  const handleaddProduct = () => {
+    addProduct(selectedProduct);
     setQuantity(DEFAULT_QUANTITY);
   };
 
@@ -71,7 +71,7 @@ const Product = ({ product, addProductToBasket }) => {
         />
         <AddToBasketButton
           data-testid={`add-to-basket-button-product-${product.stockKeepingUnit}`}
-          onClick={() => handleAddProductToBasket()}
+          onClick={() => handleaddProduct()}
         >
           ADD TO BASKET
         </AddToBasketButton>
@@ -82,7 +82,7 @@ const Product = ({ product, addProductToBasket }) => {
 
 Product.propTypes = {
   product: object.isRequired,
-  addProductToBasket: func.isRequired,
+  addProduct: func.isRequired,
 };
 
 export default Product;

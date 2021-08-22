@@ -32,7 +32,7 @@ const ListBasketProducts = styled.div`
   }
 `;
 
-const ShoppingBasket = ({ products, changeQuantity }) => {
+const ShoppingBasket = ({ products, changeQuantity, removeProduct }) => {
   return (
     <Container>
       <Title>
@@ -45,6 +45,7 @@ const ShoppingBasket = ({ products, changeQuantity }) => {
             <ShoppingBasketProduct
               product={product}
               changeQuantity={changeQuantity}
+              removeProduct={removeProduct}
             />
           );
         })}
@@ -58,6 +59,7 @@ const ShoppingBasket = ({ products, changeQuantity }) => {
 ShoppingBasket.propTypes = {
   products: arrayOf(object),
   changeQuantity: func.isRequired,
+  removeProduct: func.isRequired,
 };
 
 ShoppingBasket.defaultProps = {

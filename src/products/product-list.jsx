@@ -7,14 +7,14 @@ const Container = styled.div`
   width: 50%;
 `;
 
-const ProductList = ({ products, addProductToBasket }) => {
+const ProductList = ({ products, addProduct }) => {
   return (
     <Container data-testid="products-list">
       {products?.map((product) => {
         return (
           <Product
             product={product}
-            addProductToBasket={addProductToBasket}
+            addProduct={addProduct}
             key={`product-${product.stockKeepingUnit}`}
           >
             {product.stockKeepingUnit}
@@ -27,12 +27,12 @@ const ProductList = ({ products, addProductToBasket }) => {
 
 ProductList.propTypes = {
   products: arrayOf(object),
-  addProductToBasket: func,
+  addProduct: func,
 };
 
 ProductList.defaultProps = {
   products: [],
-  addProductToBasket: () => {},
+  addProduct: () => {},
 };
 
 export default ProductList;

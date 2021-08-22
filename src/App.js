@@ -9,7 +9,7 @@ function App() {
   const [basketProducts, setBasketProducts] = useState([]);
   const { products } = data;
 
-  const addProductToBasket = (product) => {
+  const addProduct = (product) => {
     const productExists = basketProducts.find(
       (basketProduct) =>
         basketProduct?.stockKeepingUnit === product?.stockKeepingUnit
@@ -50,17 +50,23 @@ function App() {
     }
   };
 
+  const removeProduct = (product) => {
+    const updatedBasket = basketProducts.filter(
+      (basketProduct) =>
+        basketProduct?.stockKeepingUnit !== product?.stockKeepingUnit
+    );
+    setBasketProducts(updatedBasket);
+  };
+
   return (
     <div className="App">
       <Header />
       <div className="row">
-        <ProductList
-          products={products}
-          addProductToBasket={addProductToBasket}
-        />
+        <ProductList products={products} addProduct={addProduct} />
         <ShoppingBasket
           products={basketProducts}
           changeQuantity={changeQuantity}
+          removeProduct={removeProduct}
         />
       </div>
     </div>
