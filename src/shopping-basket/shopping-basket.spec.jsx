@@ -16,7 +16,7 @@ describe("shopping-basket Component", () => {
       quantity: 2,
       promotion: {
         code: PROMOTION_CODES.ITEMS_FOR_COST,
-        appliedQuantity: 3,
+        requiredQuantity: 3,
         appliedValue: 40,
       },
     },
@@ -27,7 +27,7 @@ describe("shopping-basket Component", () => {
       quantity: 1,
       promotion: {
         code: PROMOTION_CODES.PERCENT_OF_ITEMS,
-        appliedQuantity: 2,
+        requiredQuantity: 2,
         appliedValue: 25,
       },
     },
@@ -64,7 +64,7 @@ describe("shopping-basket Component", () => {
       "6 Items"
     );
     expect(getByTestId("shopping-basket-total-price").textContent).toBe(
-      "Total: £0.00"
+      "Total: £145.00"
     );
     mockBasketProducts.forEach((product) => {
       expect(

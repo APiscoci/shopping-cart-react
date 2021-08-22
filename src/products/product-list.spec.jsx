@@ -17,6 +17,10 @@ describe("product-list component", () => {
       expect(
         getByTestId(`product-${product.stockKeepingUnit}`).textContent
       ).toBe(product.stockKeepingUnit);
+
+      expect(
+        getByTestId(`product-cost-${product.stockKeepingUnit}`).textContent
+      ).toBe(`£${parseFloat(product.unitPrice).toFixed(2)}`);
     });
   });
 
