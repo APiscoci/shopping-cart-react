@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { arrayOf, object, func } from "prop-types";
 import ShoppingBasketProduct from "./shopping-basket-product";
-import { calculateNumberProducts } from "../utilities/helpers";
+import {
+  calculateNumberProducts,
+  calculateTotalPrice,
+} from "../utilities/helpers";
 
 const Container = styled.div`
   width: 40%;
@@ -24,7 +27,7 @@ const TotalCost = styled.div`
   text-align: end;
 `;
 
-const ListBasketProducts = styled.div`
+const BasketProductsContainer = styled.div`
   height: 25rem;
   overflow: scroll;
   ::-webkit-scrollbar {
@@ -34,6 +37,7 @@ const ListBasketProducts = styled.div`
 `;
 
 const ShoppingBasket = ({ products, changeQuantity, removeProduct }) => {
+  const totalPrice = calculateTotalPrice(products);
   return (
     <Container>
       <Title>
@@ -42,7 +46,7 @@ const ShoppingBasket = ({ products, changeQuantity, removeProduct }) => {
           {calculateNumberProducts(products)} Items
         </span>
       </Title>
-      <ListBasketProducts>
+      <BasketProductsContainer>
         {products.map((product) => {
           return (
             <ShoppingBasketProduct
@@ -53,9 +57,9 @@ const ShoppingBasket = ({ products, changeQuantity, removeProduct }) => {
             />
           );
         })}
-      </ListBasketProducts>
+      </BasketProductsContainer>
       <TotalCost data-testid="shopping-basket-total-price">
-        <b>Total: </b>£0.00
+        <b>Total: </b>£{parseFloat(totalPrice).toFixed(2)}
       </TotalCost>
     </Container>
   );

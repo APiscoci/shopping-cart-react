@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { object, func } from "prop-types";
 import ProductQuantity from "../products/product-quantity";
+import { getCostForProduct } from "../utilities/helpers";
 
 const Container = styled.div`
   display: flex;
@@ -64,7 +65,13 @@ const ShoppingBasketProduct = ({ product, changeQuantity, removeProduct }) => {
         <ProductCost
           data-testid={`basket-product-${product.stockKeepingUnit}-cost`}
         >
-          £{parseFloat(product?.quantity * product?.unitPrice).toFixed(2)}
+          £
+          {parseFloat(
+            getCostForProduct({
+              product: product,
+              promotion: product?.promotion,
+            })
+          ).toFixed(2)}
         </ProductCost>
         <RemoveButton onClick={() => removeProduct(product)}>X</RemoveButton>
       </ProductsContainer>

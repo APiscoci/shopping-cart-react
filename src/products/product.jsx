@@ -62,7 +62,9 @@ const Product = ({ product, addProduct }) => {
         <ProductSKU data-testid={`product-${product?.stockKeepingUnit}`}>
           {product?.stockKeepingUnit}
         </ProductSKU>
-        <ProductSKU>£{parseFloat(product?.unitPrice).toFixed(2)}</ProductSKU>
+        <ProductSKU data-testid={`product-cost-${product?.stockKeepingUnit}`}>
+          £{parseFloat(product?.unitPrice).toFixed(2)}
+        </ProductSKU>
         <ProductQuantity
           quantity={quantity}
           onChange={(value) => {
