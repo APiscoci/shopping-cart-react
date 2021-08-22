@@ -8,3 +8,9 @@ body {
 code {
   font-family: "Oswald", sans-serif;
 }
+
+.row{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
