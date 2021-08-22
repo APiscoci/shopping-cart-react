@@ -23,6 +23,7 @@ describe("/helpers", () => {
         });
         expect(numberOfProducts).toBe(30);
       });
+
       it("should apply promotion to 3 products 'B'", () => {
         const numberOfProducts = getCostForProduct({
           product: { ...mockBasketProducts[1], quantity: 3 },
@@ -55,6 +56,7 @@ describe("/helpers", () => {
         });
         expect(numberOfProducts).toBe(55);
       });
+
       it("should apply promotion to 2 products 'D'", () => {
         const numberOfProducts = getCostForProduct({
           product: { ...mockBasketProducts[3], quantity: 2 },
@@ -89,6 +91,7 @@ describe("/helpers", () => {
         expect(totalPrice).toBe(30);
       });
     });
+
     describe("products with promotions applied", () => {
       it("should return the correct price for a product with promotion code 0", () => {
         const products = [{ ...mockBasketProducts[1], quantity: 3 }];
@@ -102,6 +105,7 @@ describe("/helpers", () => {
         expect(totalPrice).toBe(154);
       });
     });
+
     it("should return the correct price for a list of products", () => {
       const totalPrice = calculateTotalPrice(mockBasketProducts);
       expect(totalPrice).toBe(540);
@@ -113,6 +117,7 @@ describe("/helpers", () => {
       const numberOfProducts = checkPromotionApplied(mockBasketProducts[1]);
       expect(numberOfProducts).toBe(true);
     });
+
     it("should return undefined if the product has no promotion applied", () => {
       const numberOfProducts = checkPromotionApplied(mockBasketProducts[0]);
       expect(numberOfProducts).toBe(undefined);

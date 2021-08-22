@@ -1,84 +1,101 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, act, screen } from "@testing-library/react";
 import ShoppingBasket from "./shopping-basket";
+import { unmountComponentAtNode } from "react-dom";
 import { PROMOTION_CODES } from "../constants/constants";
 
-describe("shopping-basket Component", () => {
-  const mockBasketProducts = [
-    {
-      stockKeepingUnit: "A",
-      unitPrice: 10.0,
-      quantity: 2,
+const mockBasketProducts = [
+  {
+    stockKeepingUnit: "A",
+    unitPrice: 10.0,
+    quantity: 2,
+  },
+  {
+    stockKeepingUnit: "B",
+    unitPrice: 15.0,
+    quantity: 2,
+    promotion: {
+      code: PROMOTION_CODES.ITEMS_FOR_COST,
+      requiredQuantity: 3,
+      appliedValue: 40,
     },
-    {
-      stockKeepingUnit: "B",
-      unitPrice: 15.0,
-      quantity: 2,
-      promotion: {
-        code: PROMOTION_CODES.ITEMS_FOR_COST,
-        requiredQuantity: 3,
-        appliedValue: 40,
-      },
+  },
+  { stockKeepingUnit: "C", unitPrice: 40.0, quantity: 1 },
+  {
+    stockKeepingUnit: "D",
+    unitPrice: 55.0,
+    quantity: 1,
+    promotion: {
+      code: PROMOTION_CODES.PERCENT_OF_ITEMS,
+      requiredQuantity: 2,
+      appliedValue: 25,
     },
-    { stockKeepingUnit: "C", unitPrice: 40.0, quantity: 1 },
-    {
-      stockKeepingUnit: "D",
-      unitPrice: 55.0,
-      quantity: 1,
-      promotion: {
-        code: PROMOTION_CODES.PERCENT_OF_ITEMS,
-        requiredQuantity: 2,
-        appliedValue: 25,
-      },
-    },
-  ];
+  },
+];
 
+let container = null;
+beforeEach(() => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
+
+describe("shopping-basket Component", () => {
   it("should render the empty basket correctly", () => {
-    const { getByTestId } = render(
-      <ShoppingBasket
-        products={[]}
-        removeProduct={() => {}}
-        changeQuantity={() => {}}
-      />
-    );
-    expect(getByTestId("shopping-basket-title").textContent).toBe(
+    act(() => {
+      render(
+        <ShoppingBasket
+          products={[]}
+          removeProduct={() => {}}
+          changeQuantity={() => {}}
+        />
+      );
+    });
+    expect(screen.getByTestId("shopping-basket-title").textContent).toBe(
       "Shopping Basket"
     );
-    expect(getByTestId("shopping-basket-number-items").textContent).toBe(
+    expect(screen.getByTestId("shopping-basket-number-items").textContent).toBe(
       "0 Items"
     );
-    expect(getByTestId("shopping-basket-total-price").textContent).toBe(
+    expect(screen.getByTestId("shopping-basket-total-price").textContent).toBe(
       "Total: £0.00"
     );
   });
 
   it("should render the products added to the basket correctly", () => {
-    const { getByTestId } = render(
-      <ShoppingBasket
-        products={mockBasketProducts}
-        removeProduct={() => {}}
-        changeQuantity={() => {}}
-      />
-    );
-    expect(getByTestId("shopping-basket-number-items").textContent).toBe(
+    act(() => {
+      render(
+        <ShoppingBasket
+          products={mockBasketProducts}
+          removeProduct={() => {}}
+          changeQuantity={() => {}}
+        />
+      );
+    });
+    expect(screen.getByTestId("shopping-basket-number-items").textContent).toBe(
       "6 Items"
     );
-    expect(getByTestId("shopping-basket-total-price").textContent).toBe(
+    expect(screen.getByTestId("shopping-basket-total-price").textContent).toBe(
       "Total: £145.00"
     );
     mockBasketProducts.forEach((product) => {
       expect(
-        getByTestId(`basket-product-${product.stockKeepingUnit}`)
+        screen.getByTestId(`basket-product-${product.stockKeepingUnit}`)
       ).toBeTruthy();
 
       expect(
-        getByTestId(
+        screen.getByTestId(
           `basket-product-stock-keeping-unit-${product.stockKeepingUnit}`
         ).textContent
       ).toBe(product.stockKeepingUnit);
 
       expect(
-        getByTestId(`basket-product-${product.stockKeepingUnit}-cost`)
+        screen.getByTestId(`basket-product-${product.stockKeepingUnit}-cost`)
           .textContent
       ).toBe(`£${parseFloat(product.quantity * product.unitPrice).toFixed(2)}`);
     });

@@ -1,59 +1,82 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, act, screen } from "@testing-library/react";
+import { unmountComponentAtNode } from "react-dom";
 import App from "./App";
+
+let container = null;
+beforeEach(() => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
 
 describe("App tests", () => {
   it("should render the page without crashing", () => {
-    const div = document.createElement("div");
-    ReactDOM.render(<App />, div);
+    act(() => {
+      render(<App />, container);
+    });
   });
 
   it("should be able to add item to the basket", () => {
-    const { getByTestId } = render(<App />);
+    act(() => {
+      render(<App />, container);
+    });
 
     // When
-    fireEvent.click(getByTestId("add-to-basket-button-product-A"));
+    fireEvent.click(screen.getByTestId("add-to-basket-button-product-A"));
 
     // Then
-    expect(getByTestId("basket-product-stock-keeping-unit-A")).toBeTruthy();
+    expect(
+      screen.getByTestId("basket-product-stock-keeping-unit-A")
+    ).toBeTruthy();
   });
 
   it("should show the total cost of the basket", () => {
-    const { getByTestId } = render(<App />);
+    act(() => {
+      render(<App />, container);
+    });
 
     // When
-    fireEvent.click(getByTestId("add-to-basket-button-product-A"));
+    fireEvent.click(screen.getByTestId("add-to-basket-button-product-A"));
 
     // Then
-    expect(getByTestId("shopping-basket-total-price").textContent).toBe(
+    expect(screen.getByTestId("shopping-basket-total-price").textContent).toBe(
       "Total: £10.00"
     );
   });
 
   it("should apply promotion to every multiple of 3", () => {
-    const { getByTestId } = render(<App />);
+    act(() => {
+      render(<App />, container);
+    });
 
     // When
-    fireEvent.click(getByTestId("add-to-basket-button-product-B"));
-    fireEvent.click(getByTestId("add-to-basket-button-product-B"));
-    fireEvent.click(getByTestId("add-to-basket-button-product-B"));
+    fireEvent.click(screen.getByTestId("add-to-basket-button-product-B"));
+    fireEvent.click(screen.getByTestId("add-to-basket-button-product-B"));
+    fireEvent.click(screen.getByTestId("add-to-basket-button-product-B"));
 
     // Then
-    expect(getByTestId("shopping-basket-total-price").textContent).toBe(
+    expect(screen.getByTestId("shopping-basket-total-price").textContent).toBe(
       "Total: £40.00"
     );
   });
 
   it("should apply promotion of 25% off to evey multiple of 2", () => {
-    const { getByTestId } = render(<App />);
+    act(() => {
+      render(<App />, container);
+    });
 
     // When
-    fireEvent.click(getByTestId("add-to-basket-button-product-D"));
-    fireEvent.click(getByTestId("add-to-basket-button-product-D"));
+    fireEvent.click(screen.getByTestId("add-to-basket-button-product-D"));
+    fireEvent.click(screen.getByTestId("add-to-basket-button-product-D"));
 
     //Then
-    expect(getByTestId("shopping-basket-total-price").textContent).toBe(
+    expect(screen.getByTestId("shopping-basket-total-price").textContent).toBe(
       "Total: £82.50"
     );
   });
