@@ -22,7 +22,7 @@ const ProductSKU = styled.div`
   text-align: left;
 `;
 
-const ProductPrice = styled.div`
+const ProductCost = styled.div`
   padding: 1rem 0;
 `;
 
@@ -61,7 +61,11 @@ const ShoppingBasketProduct = ({ product, changeQuantity, removeProduct }) => {
           quantity={product?.quantity}
           onChange={(value) => handleQuantityChange(value)}
         />
-        <ProductPrice>£{product?.quantity * product?.unitPrice}</ProductPrice>
+        <ProductCost
+          data-testid={`basket-product-${product.stockKeepingUnit}-cost`}
+        >
+          £{parseFloat(product?.quantity * product?.unitPrice).toFixed(2)}
+        </ProductCost>
         <RemoveButton onClick={() => removeProduct(product)}>X</RemoveButton>
       </ProductsContainer>
     </Container>

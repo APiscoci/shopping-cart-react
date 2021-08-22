@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { arrayOf, object, func } from "prop-types";
 import ShoppingBasketProduct from "./shopping-basket-product";
+import { calculateNumberProducts } from "../utilities/helpers";
 
 const Container = styled.div`
   width: 40%;
@@ -37,7 +38,9 @@ const ShoppingBasket = ({ products, changeQuantity, removeProduct }) => {
     <Container>
       <Title>
         <span data-testid="shopping-basket-title">Shopping Basket</span>
-        <span data-testid="shopping-basket-number-items">0 Items</span>
+        <span data-testid="shopping-basket-number-items">
+          {calculateNumberProducts(products)} Items
+        </span>
       </Title>
       <ListBasketProducts>
         {products.map((product) => {
@@ -46,6 +49,7 @@ const ShoppingBasket = ({ products, changeQuantity, removeProduct }) => {
               product={product}
               changeQuantity={changeQuantity}
               removeProduct={removeProduct}
+              key={`basket-product-${product.stockKeepingUnit}`}
             />
           );
         })}
