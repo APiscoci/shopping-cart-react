@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { arrayOf, object } from "prop-types";
+import { arrayOf, object, func } from "prop-types";
+import ShoppingBasketProduct from "./shopping-basket-product";
 
 const Container = styled.div`
   width: 40%;
@@ -23,7 +24,7 @@ const TotalCost = styled.div`
 `;
 
 const ListBasketProducts = styled.div`
-  height: 21rem;
+  height: 25rem;
   overflow: scroll;
   ::-webkit-scrollbar {
     width: 0px;
@@ -31,7 +32,7 @@ const ListBasketProducts = styled.div`
   }
 `;
 
-const ShoppingBasket = ({ products }) => {
+const ShoppingBasket = ({ products, changeQuantity }) => {
   return (
     <Container>
       <Title>
@@ -40,7 +41,12 @@ const ShoppingBasket = ({ products }) => {
       </Title>
       <ListBasketProducts>
         {products.map((product) => {
-          return <div>{product.stockKeepingUnit}</div>;
+          return (
+            <ShoppingBasketProduct
+              product={product}
+              changeQuantity={changeQuantity}
+            />
+          );
         })}
       </ListBasketProducts>
       <TotalCost data-testid="shopping-basket-total-price">
@@ -51,6 +57,7 @@ const ShoppingBasket = ({ products }) => {
 };
 ShoppingBasket.propTypes = {
   products: arrayOf(object),
+  changeQuantity: func.isRequired,
 };
 
 ShoppingBasket.defaultProps = {

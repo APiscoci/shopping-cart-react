@@ -10,7 +10,44 @@ function App() {
   const { products } = data;
 
   const addProductToBasket = (product) => {
-    setBasketProducts([...basketProducts, product]);
+    const productExists = basketProducts.find(
+      (basketProduct) =>
+        basketProduct?.stockKeepingUnit === product?.stockKeepingUnit
+    );
+
+    if (productExists) {
+      setBasketProducts(
+        basketProducts.map((basketProduct) =>
+          basketProduct?.stockKeepingUnit === product?.stockKeepingUnit
+            ? {
+                ...basketProduct,
+                quantity: product.quantity + basketProduct.quantity,
+              }
+            : basketProduct
+        )
+      );
+    } else {
+      setBasketProducts([...basketProducts, product]);
+    }
+  };
+
+  const changeQuantity = (product) => {
+    const productExists = basketProducts.find(
+      (basketProduct) =>
+        basketProduct?.stockKeepingUnit === product?.stockKeepingUnit
+    );
+    if (productExists) {
+      setBasketProducts(
+        basketProducts.map((basketProduct) =>
+          basketProduct?.stockKeepingUnit === product?.stockKeepingUnit
+            ? {
+                ...basketProduct,
+                quantity: product.quantity,
+              }
+            : basketProduct
+        )
+      );
+    }
   };
 
   return (
@@ -21,7 +58,10 @@ function App() {
           products={products}
           addProductToBasket={addProductToBasket}
         />
-        <ShoppingBasket products={basketProducts} />
+        <ShoppingBasket
+          products={basketProducts}
+          changeQuantity={changeQuantity}
+        />
       </div>
     </div>
   );
