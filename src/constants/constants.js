@@ -2,3 +2,4 @@ export const PROMOTION_CODES = {
   ITEMS_FOR_COST: 0,
   PERCENT_OF_ITEMS: 1,
 };
+export const DEFAULT_QUANTITY = 1;

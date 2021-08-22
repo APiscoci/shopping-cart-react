@@ -1,6 +1,7 @@
 import React from "react";
 import { arrayOf, object } from "prop-types";
 import styled from "styled-components";
+import Product from "./product";
 
 const Container = styled.div`
   width: 50%;
@@ -11,9 +12,12 @@ const ProductList = ({ products }) => {
     <Container data-testid="products-list">
       {products?.map((product) => {
         return (
-          <div key={`product-${product.stockKeepingUnit}`}>
+          <Product
+            product={product}
+            key={`product-${product.stockKeepingUnit}`}
+          >
             {product.stockKeepingUnit}
-          </div>
+          </Product>
         );
       })}
     </Container>
